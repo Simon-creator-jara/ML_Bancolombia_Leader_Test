@@ -154,4 +154,4 @@ Se llevaron acabo pruebas unitarias con pytest, además de usar mock para simula
 ![alt text](imagenes/diagrama_infra_eks.PNG)
 
 - Infra Node Group:
-![alt text](imagenes/diagrama_infra_noe_group.PNG)
+![alt text](imagenes/esquema_infra_noe_group.PNG)
