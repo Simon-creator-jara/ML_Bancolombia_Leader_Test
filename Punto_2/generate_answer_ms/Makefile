@@ -35,10 +35,10 @@ local-stack: ## run the local stack
 
 		-@aws --endpoint-url=http://localhost:4566 sns create-topic --name local-aid-r2-dev-sns-generic-error
 
-docker-build:
+docker_build:
 	docker build -f deployment/Dockerfile -t generate_retrieve_ms .
 
-docker-start:
+docker_start:
 	docker run -d -p 8003:8003 --name generate_retrieve_ms generate_retrieve_ms
 
 
