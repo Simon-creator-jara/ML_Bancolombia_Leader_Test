@@ -1,4 +1,6 @@
 La carpeta PUNTO_2 tiene la siguiente estructura:
+
+```
 .env
 .gitignore
 docker-compose.yaml
@@ -82,6 +84,7 @@ preprocessing_ms/
 rag-chatbot/
     src/
         ChatBox.jsx
+```
 
 En la carpeta **cloud_SJV_Leader** se encuentra todo lo relacionado con el despliegue de la solución en AWS. El despliegue del clúster de Kubernetes y del node group se realizó utilizando eksctl, una herramienta de AWS (similar a CLI o CDK) para la gestión de infraestructura. El archivo eks-cluster.yaml contiene la configuración del clúster, incluyendo el nombre y tipo de instancia. Para que el clúster de EKS tenga acceso a los secretos, se utiliza rag-bot-sa.yaml, donde se crea un service account específico para EKS. Los comandos necesarios para aplicar estos manifiestos se encuentran en la carpeta commands.
 
