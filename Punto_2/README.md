@@ -148,3 +148,10 @@ Se llevaron acabo pruebas unitarias con pytest, además de usar mock para simula
 ![alt text](imagenes/image-5.png)
 - Unit test preprocessing ms:
 ![alt text](imagenes/image-6.png)
+
+# Infrastructura de AWS:
+- Infra eks:
+![alt text](imagenes/diagrama_infra_eks.PNG)
+
+- Infra Node Group:
+![alt text](imagenes/diagrama_infra_noe_group.PNG)
