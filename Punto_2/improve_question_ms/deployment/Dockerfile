@@ -5,5 +5,5 @@ COPY ../requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY src/ src/
 ENV PYTHONPATH="${PYTHONPATH}:/app/src"
-EXPOSE 8000
+EXPOSE 8001
 CMD ["uvicorn", "applications.app_service:app", "--host", "0.0.0.0", "--port", "8001"]

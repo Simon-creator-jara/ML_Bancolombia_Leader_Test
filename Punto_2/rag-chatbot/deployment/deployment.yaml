@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-chat-ms
+  labels:
+    app: rag-chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-chat
+  template:
+    metadata:
+      labels:
+        app: rag-chat
+    spec:
+      serviceAccountName: rag-bot-sa
+      containers:
+        - name: rag-chat-container
+          image: 697289108405.dkr.ecr.us-east-1.amazonaws.com/demorag:rag-chatbot-def-4
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-chat-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: rag-chat
+  ports:
+    - port: 3000
+      targetPort: 3000

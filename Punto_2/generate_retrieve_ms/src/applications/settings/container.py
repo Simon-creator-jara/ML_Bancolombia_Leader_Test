@@ -9,16 +9,11 @@ from src.applications.settings import APP_CONFIG_FILE as CONFIG_FILE
 from src.applications.settings.base_settings import GeneralBaseModel
 from src.applications.settings.logger import Logger
 from src.applications.settings.settings import Config
-from src.domain.usecase import (CheckHealthUseCase, DatasetCleanerImpl,
-                                SplitterImpl)
-# from src.infraestructure.driven_adapters import (S3OCRRepository,
-# SnsRepository, SqsRepository)
+from src.domain.usecase import (CheckHealthUseCase)
 from src.infraestructure.driven_adapters import (SnsRepository)
 from src.infraestructure.helpers.utils import load_json_file
-from src.domain.usecase.clean_data.clean_data_use_case import DatasetCleanerImpl
-from src.domain.usecase.split_data.split_data_use_case import SplitterImpl
 from src.domain.usecase.embed_store.embed_store_use_case import EmbedAndStoreUseCase
-from src.domain.model.dataset.dataset_model import RawDataset
+from src.domain.model.embeddings.embeddings_model import question
 from src.infraestructure.driven_adapters.openai.adapter.openai_embedding_adapter import OpenAIEmbeddingAdapter
 from src.infraestructure.driven_adapters.postgres.adapter.postgres_chunk_repository import PostgresChunkRepository
 from src.infraestructure.driven_adapters.secret_repository.adapter.secret_manager_adapter import SecretManagerService
@@ -34,8 +29,6 @@ class Container(GeneralBaseModel):
     and use cases."""
     app_config: Config
     check_health_use_case: CheckHealthUseCase
-    dataset_cleaner_use_case: DatasetCleanerImpl
-    splitter_use_case: SplitterImpl
     embed_store_use_case: EmbedAndStoreUseCase
     logger: Logger
     jwt: str
@@ -78,21 +71,13 @@ def get_deps_container() -> Container:
         user=rds_secret["username"],
         password=rds_secret["password"],
         database="postgres",
-        host="demorag.cioitd2c2d12.us-east-1.rds.amazonaws.com",
+        host=rds_secret["endpoint"],
         port=5432,
         minconn=1,
         maxconn=100
     )
     check_health_use_case = CheckHealthUseCase(app_config, logger)
-    # s3_repository = S3OCRRepository(app_config, logger)
     sns_repository = SnsRepository(app_config, logger)
-    # sqs_repository = SqsRepository(app_config, logger)
-    dataset_cleaner_use_case = DatasetCleanerImpl(
-        logger=logger, sns_notifier=sns_repository
-    )
-    splitter_use_case = SplitterImpl(
-        logger=logger, sns_notifier=sns_repository
-    )
     repo = PostgresChunkRepository(pool)
     openai_secret = secret_service.get_secret(
         app_config.openai_secret)
@@ -104,8 +89,6 @@ def get_deps_container() -> Container:
     return Container(
         app_config=app_config,
         check_health_use_case=check_health_use_case,
-        dataset_cleaner_use_case=dataset_cleaner_use_case,
-        splitter_use_case=splitter_use_case,
         embed_store_use_case=embed_store,
         logger=logger,
         jwt=jwt_secret["jwt"]

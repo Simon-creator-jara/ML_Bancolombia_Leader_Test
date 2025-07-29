@@ -10,8 +10,9 @@ class OpenAIEmbeddingAdapter(EmbeddingGateway):
         self.client = client
 
     def embed_texts(self, texts):
+        question=texts.model_dump(exclude_none=True)
         response = self.client.embeddings.create(
             model="text-embedding-3-large",
-            input=texts
+            input=question["question"]
         )
         return response.data[0].embedding

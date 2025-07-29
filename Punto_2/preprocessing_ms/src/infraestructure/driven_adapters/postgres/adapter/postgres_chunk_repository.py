@@ -5,7 +5,7 @@ from src.domain.model.database.gateway.database_gateway import ChunkRepository
 
 
 class PostgresChunkRepository(ChunkRepository):
-    def __init__(self, conn_pool: pool_py.SimpleConnectionPool, table: str = "simon_leader_yes3"):
+    def __init__(self, conn_pool: pool_py.SimpleConnectionPool, table: str = "simon_leader_yes2"):
         self.pool = conn_pool
         self.table = table
 

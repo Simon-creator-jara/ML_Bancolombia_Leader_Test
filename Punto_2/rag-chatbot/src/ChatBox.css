@@ -1,0 +1,90 @@
+.chat-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #f4f4f4;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.chat-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2E3A59;
+}
+
+.chat-subtitle {
+  text-align: center;
+  color: #777;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.chat-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  height: 400px;
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+
+.message {
+  margin-bottom: 0.8rem;
+}
+
+.message.user {
+  text-align: right;
+}
+
+.message.bot,
+.message.error {
+  text-align: left;
+}
+
+.bubble {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 18px;
+  color: #333;
+  max-width: 80%;
+}
+
+.bubble.user {
+  background-color: #DCF8C6;
+}
+
+.bubble.bot {
+  background-color: #e6e6e6;
+}
+
+.bubble.error {
+  background-color: #f8d7da;
+}
+
+.input-container {
+  display: flex;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.chat-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}

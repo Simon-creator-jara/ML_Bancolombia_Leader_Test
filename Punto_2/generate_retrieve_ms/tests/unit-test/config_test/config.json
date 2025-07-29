@@ -1,0 +1,7 @@
+{
+    "url_prefix": "/",
+    "error_notification_service_name": "demorag_test",
+    "rds_secret": "arn:aws:secretsmanager:us-east-1:697289108405:secret:rds!db-30d01429-dc7d-4927-98a1-e016c10816ae-jemNHq",
+    "openai_secret": "arn:aws:secretsmanager:us-east-1:697289108405:secret:openai-LfZpny",
+    "jwt_secret": "arn:aws:secretsmanager:us-east-1:697289108405:secret:jwt_secret-37brE6"
+}

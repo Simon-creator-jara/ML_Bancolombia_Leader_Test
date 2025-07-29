@@ -1,0 +1,4 @@
+{
+  "secretName": "rag-chatbot-secrets-demo",
+  "region": "us-east-1"
+}

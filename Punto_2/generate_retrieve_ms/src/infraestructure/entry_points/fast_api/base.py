@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.infraestructure.entry_points.routes import clean_split_router
+from src.infraestructure.entry_points.routes import retrieve_router
 from src.infraestructure.entry_points.routes import (
     health_router
 )
@@ -13,6 +13,6 @@ def set_routes(prefix: str):
         health_router.router, prefix="/health", tags=["health"]
     )
     api_router.include_router(
-        clean_split_router.router, prefix="/clean", tags=["clean"]
+        retrieve_router.router, prefix="/retrieve", tags=["retrieve"]
     )
     return api_router

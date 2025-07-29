@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: generate-retrieve-ms
+  labels:
+    app: generate-retrieve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: generate-retrieve
+  template:
+    metadata:
+      labels:
+        app: generate-retrieve
+    spec:
+      serviceAccountName: rag-bot-sa
+      containers:
+        - name: generate-retrieve-container
+          image: 697289108405.dkr.ecr.us-east-1.amazonaws.com/demorag:generate_retrieve_ms
+          ports:
+            - containerPort: 8002
+          env:
+            - name: PYTHONPATH
+              value: "/app/src"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: generate-retrieve-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: generate-retrieve
+  ports:
+    - port: 8002
+      targetPort: 8002

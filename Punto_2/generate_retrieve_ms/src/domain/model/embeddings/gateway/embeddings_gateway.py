@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
+from src.domain.model.embeddings.embeddings_model import question
 
 
 class EmbeddingGateway(ABC):
@@ -8,7 +9,7 @@ class EmbeddingGateway(ABC):
     """
 
     @abstractmethod
-    def embed_texts(self, texts: List[str]) -> List[List[float]]:
+    def embed_texts(self, texts: question) -> List:
         """
         Generate embeddings for a batch of texts.
 

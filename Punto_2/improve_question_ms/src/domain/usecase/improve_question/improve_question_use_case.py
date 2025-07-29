@@ -17,7 +17,7 @@ class ImproveQuestionUseCase:
         except Exception as error:
             self.logger.error(f"Error reading file: {error}")
             error_message = f"Error Details: {error}"
-            subject_message = ("Error executing DataCleaner")
+            subject_message = ("Error executing ImproveQuestionUseCase")
             message_error = MessageError(subject_message=subject_message,
                                          content_message=error_message)
             await self.sns_notifier.send(message_error)

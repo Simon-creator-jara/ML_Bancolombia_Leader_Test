@@ -1,6 +1,6 @@
-# from .s3_repository.adapter.s3_repository import S3OCRRepository
 from .sns_repository.adapter.sns_repository import SnsRepository
-# from .sqs_repository.adapter.sqs_repository import SqsRepository
 from .secret_repository.adapter.secret_manager_adapter import \
     SecretManagerService
-__all__ = ["SnsRepository", "SecretManagerService"]
+from .openai.adapter.openai_embedding_adapter import OpenAIEmbeddingAdapter
+from .postgres.adapter.postgres_chunk_repository import PostgresChunkRepository
+__all__ = ["SnsRepository", "SecretManagerService", "OpenAIEmbeddingAdapter", "PostgresChunkRepository"]

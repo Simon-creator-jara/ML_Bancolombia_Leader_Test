@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Parameters:
+
+  pscgroupname:
+    Description: Sec group for ec2
+    Type: String
+  
+  pvpcId:
+    Description: vpc ID
+    Type: String
+
+  pUsername:
+    Description: User RDS
+    Type: String
+
+  psubnetId:
+    Description: subnet ID
+    Type: String
+
+  pPassword:
+    Description: Password RDS
+    Type: String
+
+Resources:
+
+    ecr:
+        Type: "AWS::CloudFormation::Stack"
+        Properties:
+            TemplateURL: https://simon-leader-def.s3.us-east-1.amazonaws.com/template-ecr.yaml
+
+    iam:
+        Type: "AWS::CloudFormation::Stack"
+        Properties:
+            TemplateURL: https://simon-leader-def.s3.us-east-1.amazonaws.com/template-iam.yaml
+
+    secret:
+        Type: "AWS::CloudFormation::Stack"
+        Properties:
+            TemplateURL: https://simon-leader-def.s3.us-east-1.amazonaws.com/secret-manager.yaml
+
+    rdsrag:
+        Type: "AWS::CloudFormation::Stack"
+        Properties:
+            TemplateURL: https://simon-leader-def.s3.us-east-1.amazonaws.com/template-rds.yaml
+            Parameters:
+                pscgroupname: !Ref pscgroupname
+                pvpcId: !Ref pvpcId
+                pUsername: !Ref pUsername
+                psubnetId: !Ref psubnetId
+                pPassword: !Ref pPassword

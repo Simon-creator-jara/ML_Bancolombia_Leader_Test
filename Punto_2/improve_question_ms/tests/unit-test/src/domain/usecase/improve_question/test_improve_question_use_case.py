@@ -32,5 +32,5 @@ async def test_execute_failure():
     mock_logger.error.assert_called_once()
     sent = mock_sns.send.call_args[0][0]
     assert isinstance(sent, MessageError)
-    assert sent.subject_message == "Error executing DataCleaner"
+    assert sent.subject_message == "Error executing ImproveQuestionUseCase"
     assert sent.content_message == "Error Details: fail"

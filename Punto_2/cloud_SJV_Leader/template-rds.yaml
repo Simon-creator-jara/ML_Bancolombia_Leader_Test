@@ -1,0 +1,76 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: This cloud formation is to deploy rds
+
+Parameters:
+
+  pscgroupname:
+    Description: Sec group for ec2
+    Type: String
+  
+  pvpcId:
+    Description: vpc ID
+    Type: String
+
+  pUsername:
+    Description: User RDS
+    Type: String
+
+  psubnetId:
+    Description: subnet ID
+    Type: String
+
+  pPassword:
+    Description: Password RDS
+    Type: String
+
+Resources:
+
+  rSecGrouprag:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: EC2 security group
+      GroupName: !Ref pscgroupname
+      SecurityGroupEgress: 
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: "-1"
+      SecurityGroupIngress: 
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 0.0.0.0/0
+      VpcId: !Ref pvpcId
+  
+  rDBsecrag:
+    Type: AWS::RDS::DBSecurityGroup
+    Properties:
+      DBSecurityGroupIngress: 
+        - EC2SecurityGroupId: !Ref rSecGrouprag
+      EC2VpcId: !Ref pvpcId
+      GroupDescription: Prueba RDS
+
+  rRDSrag:
+    DependsOn: [rDBsecrag]
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 20
+      BackupRetentionPeriod: 7
+      DBInstanceClass: db.t3.small
+      DBName: rag_demo_leader
+      DBSubnetGroupName: !Ref psubnetId
+      VPCSecurityGroups:
+        - !Ref rSecGrouprag
+      DeletionProtection: false
+      EnableIAMDatabaseAuthentication: false
+      EnablePerformanceInsights: false
+      Engine: postgres
+      MasterUsername: !Ref pUsername
+      MasterUserPassword: !Ref pPassword
+      MaxAllocatedStorage: 1000
+      MultiAZ: false
+      NetworkType: IPV4
+      Port: 5432
+      PubliclyAccessible: true
+      StorageEncrypted: false
+      StorageType: gp2
+      UseDefaultProcessorFeatures: true

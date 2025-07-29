@@ -1,0 +1,47 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: IAM Role for EKS Pod to access Secrets Manager, KMS and ECR
+
+Resources:
+  rEKSPodExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: eks-pod-secret-kms-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: arn:aws:iam::697289108405:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0C1A063A270E8CB676EA8D068595DE9C
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                oidc.eks.us-east-1.amazonaws.com/id/0C1A063A270E8CB676EA8D068595DE9C:sub: system:serviceaccount:default:rag-bot-sa
+
+      Policies:
+        - PolicyName: RagBotAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                  - ecr:BatchCheckLayerAvailability
+                Resource: "*"
+
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: "*"
+
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                Resource: "*"
+
+Outputs:
+  RoleArn:
+    Value: !GetAtt EKSPodExecutionRole.Arn
+    Export:
+      Name: EKS-RAG-BOT-PodRole
+

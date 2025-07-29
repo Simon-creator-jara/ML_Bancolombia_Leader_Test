@@ -1,0 +1,7 @@
+tests/*
+node_modules/*
+Makefile
+README.md
+node_modules
+dist
+.git

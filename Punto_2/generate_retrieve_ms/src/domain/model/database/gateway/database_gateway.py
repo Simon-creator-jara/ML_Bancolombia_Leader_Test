@@ -8,7 +8,7 @@ class ChunkRepository(ABC):
     """
 
     @abstractmethod
-    def insert_chunks(self, records: List[Tuple]) -> None:
+    def insert_chunks(self, records: List[float]) -> None:
         """
         Persist a batch of chunk tuples.
 

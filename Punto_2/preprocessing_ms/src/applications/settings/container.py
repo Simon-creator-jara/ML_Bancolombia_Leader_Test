@@ -78,7 +78,7 @@ def get_deps_container() -> Container:
         user=rds_secret["username"],
         password=rds_secret["password"],
         database="postgres",
-        host="demorag.cioitd2c2d12.us-east-1.rds.amazonaws.com",
+        host=rds_secret["endpoint"],
         port=5432,
         minconn=1,
         maxconn=100
