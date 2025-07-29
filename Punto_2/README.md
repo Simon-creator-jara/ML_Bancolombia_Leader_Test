@@ -107,7 +107,7 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 - Archivos de ejecución: Encontrarás un makefile con alguna configuraciones para correr el micro en local (run_local), para instalar las librerías (install_local), para lanzar las unit test en local (test_local), para lanzar docker (docker_build,docker_start). Adicionalmente, encontraras los requirements.txt -dev instala las librerías para pruebas y para desarrollo, requirements.txt instala solo las librerías de desarrollo.
 - Endpoints: Puede encontrar la documentación de los endpoints aquí: http://a41eac32677e74d0585b024f6a5d478f-741200469.us-east-1.elb.amazonaws.com:8003/docs (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
-![alt text](image.png)
+![alt text](imagenes/image.png)
 
 - **generate_retrieve_ms:** Este microservicio es el encargado de recibir la pregunta mejorada del usuario para sacarle los embeddings, normalizarlos y finalmente, realizar el retrieval a la base de datos. En su interior puede encontrar carpetas como:
 - deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods. Adicionalmente, para probar en local hay un Dockerfile.local.
@@ -116,7 +116,7 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 - Archivos de ejecución: Encontrarás un makefile con alguna configuraciones para correr el micro en local (run_local), para instalar las librerías (install_local), para lanzar las unit test en local (test_local), para lanzar docker (docker_build,docker_start). Adicionalmente, encontraras los requirements.txt -dev instala las librerías para pruebas y para desarrollo, requirements.txt instala solo las librerías de desarrollo.
 - Endpoints: Puede encontrar la documentación de los endpoints aquí: http://a9b64fe8aa91a4bd999ae28dae1451c3-1604131751.us-east-1.elb.amazonaws.com:8002/docs (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
-![alt text](image-1.png)
+![alt text](imagenes/image-1.png)
 
 - **improve_question_ms:** Este microservicio es el encargado de recibir la pregunta del usuario y tiene la responsabilidad de mejorar si es una pregunta relacionada al tema o de responder que no puede ayudarle si no es un tema relacionado a la información o simplemente seguir la conversación normal, esto con el fin de no mal gastar la api de openai generando tokens e embeddings innecesarios. En su interior puede encontrar carpetas como:
 - deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods. Adicionalmente, para probar en local hay un Dockerfile.local.
@@ -125,7 +125,7 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 - Archivos de ejecución: Encontrarás un makefile con alguna configuraciones para correr el micro en local (run_local), para instalar las librerías (install_local), para lanzar las unit test en local (test_local), para lanzar docker (docker_build,docker_start). Adicionalmente, encontraras los requirements.txt -dev instala las librerías para pruebas y para desarrollo, requirements.txt instala solo las librerías de desarrollo.
 - Endpoints: Puede encontrar la documentación de los endpoints aquí: http://a801dd17f9e774a8b9d5b847151edea8-810000311.us-east-1.elb.amazonaws.com:8001/docs#/ (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
-![alt text](image-2.png)
+![alt text](imagenes/image-2.png)
 
 - **preprocessing_ms:** Este microservicio es el encargado de recibir el documento que se va a cargar a la base de datos vectorial. Por dentro hace un proceso de limpieza de la infromación por medio de regex, luego hace un split de la información para subir todo de forma paralelizada a la base de datos, con esta optimización la infromación sube en 3 min y medio, comparado con el comienzo que se demoraba 25 min sin esta optimización de subir por lotes. En su interior puede encontrar carpetas como:
 - deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods. Adicionalmente, para probar en local hay un Dockerfile.local.
@@ -141,10 +141,10 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 Se llevaron acabo pruebas unitarias con pytest, además de usar mock para simular servicios como openai, la base de datos postgres y el sistema de alertamiento de errores SNS todas con una cobertura superior al 90%,
 
 - Unit test generate answer ms:
-![alt text](image-3.png)
+![alt text](imagenes/image-3.png)
 - Unit test generate retrieve ms:
-![alt text](image-4.png)
+![alt text](imagenes/image-4.png)
 - Unit test improve question ms:
-![alt text](image-5.png)
+![alt text](imagenes/image-5.png)
 - Unit test preprocessing ms:
-![alt text](image-6.png)
+![alt text](imagenes/image-6.png)
