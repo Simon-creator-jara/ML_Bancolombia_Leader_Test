@@ -198,3 +198,6 @@ Como se puede ver en la arquitectura propongo tener un transfer family para subi
 # Inteligencia Artificial:
 - En mi local hice la prueba agregando un rerank antes de devolver la respuesta final y la respuesta fue buena, sin embargo, en esta versión no lo vas a encontrar pues no hacía mucha diferencia. Como mi retrieval es un top 3 y tiene bastante accuracy, el rerank no tenía mucho sentido.
 - Hice la prueba generando los embeddings con text-embedding-3-small que tiene una dimensión de 1536, sin embargo, con este el sistema se equivocaba contestando preguntas sobre películas semejantes. Así que decidí usar text-embedding-3-large que tiene una dimensión de 3072 y la respuesta mejoró bastante por la calidad de los embeddings.
+
+# Nota:
+En la carpeta de Evidencias/ puedes encontrar imagenes sobre la interacción con el rag y al respuesta a las preguntas.
