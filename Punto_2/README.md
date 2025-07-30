@@ -155,3 +155,11 @@ Se llevaron acabo pruebas unitarias con pytest, además de usar mock para simula
 
 - Infra Node Group:
 ![alt text](imagenes/esquema_infra_noe_group.PNG)
+
+- Infra RAG:
+![alt text](imagenes/rag_leader.drawio.png)
+
+La infrastructura para este ejercicio se basó en contenedores todo con eks, tenemos un orquestador que sería el microservicio de rag-chatbot, este básicamente se encarga de orquestar los post a los diferentes endpoints. Primero el microservicio de improve_question_ms recibe la pregunta, realiza un taggeado, es decir, define si la pregunta es una pregunta real o simplemente el usuario esta saludando o pidiendo una información fuera del scope, si es un saludo o una conversación casual el LLM de improve question envia la respuesta directamente a rag-chatbot y será la que se muestre en la interfaz gráfica. Si es una pregunta relacionada con los temas o la información de nuestro rag entonces el micro de improve_question la taggea como real y la regresa a rag-chatbot para hacerle el post a generate_retrieve_ms y hacer un retrieval de top 3 y finalmente, la respuesta vuelve a rag-chatbot que envia la últiam petición a generate_answer_ms para generar la respuesta que se mostrara en la interfaz.
+
+La interfaz tiene un front creado en React y un back en un servidor de experssJS.
+![alt text](imagenes/Pregunta_respuesta_1.PNG)
