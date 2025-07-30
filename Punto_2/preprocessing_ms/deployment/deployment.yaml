@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preprocessing-ms
+  labels:
+    app: preprocessing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: preprocessing
+  template:
+    metadata:
+      labels:
+        app: preprocessing
+    spec:
+      serviceAccountName: rag-bot-sa
+      containers:
+        - name: preprocessing-container
+          image: 697289108405.dkr.ecr.us-east-1.amazonaws.com/demorag:preprocessing_ms
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PYTHONPATH
+              value: "/app/src"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preprocessing-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: preprocessing
+  ports:
+    - port: 8000
+      targetPort: 8000

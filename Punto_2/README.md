@@ -132,6 +132,12 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 - src: Contiene toda la lógica del micro, todo esta en arquitectura limpia (dividido en applicación, dominio e infrastructura).
 - tests: Contiene todas las pruebas del microservicio. Las unit test estan hechas con pytest, por lo que encontraras un conftest.py con algunas configuraciones para su ejecución.
 - Archivos de ejecución: Encontrarás un makefile con alguna configuraciones para correr el micro en local (run_local), para instalar las librerías (install_local), para lanzar las unit test en local (test_local), para lanzar docker (docker_build,docker_start). Adicionalmente, encontraras los requirements.txt -dev instala las librerías para pruebas y para desarrollo, requirements.txt instala solo las librerías de desarrollo.
+- Endpoints: Puede encontrar la documentación de los endpoints aquí: http://aaeb4e540d1d64e33bb7363644ee8f7d-548615679.us-east-1.elb.amazonaws.com:8000/docs  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
+
+![alt text](imagenes/image_7.png)
+
+- **rag-chatbot:** Este microservicio contiene la interfaz gráfica para que el usuario interactue con el sistema RAG, además de eso también es orquestador, es decir es el encargado de realizar el workflow, recibir la pregunta, enviarsela a improve_question_ms, dependiendo del tag (si es una respuesta real o es una interacción diferente). Si es una respuesta real entonces envía la pregunta mejorada a generate_retrieve_ms, luego a generate_answer_ms y finalmente muestra la respuesta. Si no es una pregunta real (otro tipo de interacción), solo muestra en pantalla al respuesta del LLM de improve_question_ms. Este microservicio el front esta hecho en react y tiene un backend en expressJS.
+- deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods.
 - Endpoints: Puede encontrar la documentación de los endpoints aquí:  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
 **Nota:** Todo el sistema tiene un sistema de alertamiento de errores (SNS) que envia a mi correo cada vez que hay un error. 
@@ -177,6 +183,8 @@ La interfaz tiene un front creado en React y un back en un servidor de experssJS
 - Separación de Dockerfile (PDN y .local)
 - Centralización de imágenes docker con ECR
 - Documentación para usuarios. Además de agregar Docker-compose para correr en su local, lo único que tienes que hacer es agregar las credenciales de AWS en el archivo .env en el root del proyecto y lanzar el docker compose. 
+- No se expone la aplicación directamente sino que se hace por medio de un balanceador de cargas.
+- Normalización de embeddings como se usa una dsitancia de coseno, esta funciona mejor con los vectores normalizados.
 
 # Trabajo futuro:
 
