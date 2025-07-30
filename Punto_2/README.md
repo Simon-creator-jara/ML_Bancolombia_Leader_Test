@@ -1,3 +1,9 @@
+# Diagrama lógico de la solución:
+
+![alt text](imagenes/Diagrama_logico_rag.png)
+
+# Estructura del proyecto:
+
 La carpeta PUNTO_2 tiene la siguiente estructura:
 
 ```
