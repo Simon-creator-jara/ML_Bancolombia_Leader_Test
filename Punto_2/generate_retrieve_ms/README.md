@@ -1,23 +1,72 @@
-# AIO Data Processing
+# Generate Retrieve MS
 
-Repositorio con el miscroservicio de limpieza de datos (limpieza de marca de agua, conversion a png y join de archivos de ocr).
-
-## Unit test
-
-```bash
-python -m pytest --full-trace -vv -x --cov=src --cov-config=.coveragerc tests/unit-test
+```
+generate_retrieve_ms/
+├── deployment/
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── Dockerfile.local
+│   └── deployment.yaml
+├── Makefile
+├── README.md
+├── requirements.txt
+├── requirements-dev.txt
+├── src/
+│   ├── applications/
+│   │   └── app_service.py
+│   ├── domain/
+│   │   ├── model/
+│   │   │   ├── __init__.py
+│   │   │   ├── message_error/
+│   │   │   │   └── gateways/
+│   │   │   │       └── message_error_repository.py
+│   │   │   ├── embeddings/
+│   │   │   │   └── gateway/
+│   │   │   │       └── embeddings_gateway.py
+│   │   │   └── database/
+│   │   │       └── gateway/
+│   │   │           └── database_gateway.py
+│   │   └── usecase/
+│   │       ├── __init__.py
+│   │       ├── check_health/
+│   │       ├── embed_store/
+│   │       │   └── embed_store_use_case.py
+│   │       └── retrieve/
+│   │           └── retrieve_use_case.py
+│   └── infraestructure/
+│       ├── entry_points/
+│       │   ├── fast_api/
+│       │   │   ├── __init__.py
+│       │   │   ├── handlers/
+│       │   │   │   ├── __init__.py
+│       │   │   │   └── retrieve_handler.py
+│       │   │   └── health_handler.py
+│       │   └── routes/
+│       │       └── retrieve_router.py
+│       └── helpers/
+│           └── utils.py
+└── tests/
+    ├── conftest.py
+    └── unit-test/
+        └── src/
+            ├── domain/
+            │   └── usecase/
+            │       ├── embed_store/
+            │       │   └── test_embed_store_use_case.py
+            │       └── retrieve/
+            │           └── test_retrieve_use_case.py
+            └── infraestructure/
+                └── entry_points/
+                    └── routes/
+                        └── test_retrieve_router.py
 ```
 
-## Smoke Test
+En este microservicio se realiza el retrieve a la base de datos de conocimiento, al recibir la pregunta mejorada del usuario se decide normalizar los vectores para realizar la comparación por medio de la distancia de coseno. Finalmente, se realiza un top 3 para el retrieval. En local se había utilizado un Rerank pero su efecto no era muy significativo debido a que es un top 3, entonces no hacía mucho la diferencia.
 
-```bash
-gradle clean test -Dendpoint=https://informacion-int-dev.apps.ambientesbc.com/aio/orchestrator/v1/health  --tests ManagementTest -i
-```
+En la carpeta tests/ pueden encontrar las pruebas unitarias, que pasaron al 93%, en ellas se utilizaron pytest, y un proceso de mocking para servicios como openai, rds, sns.
 
-## Local Development
+En la carpeta deployment, encontrarás el Dockerfile, Dockerfile.local y el manifiesto deployment.yaml con el cual se realiza la creación del pod. También están los requirements para instalar las librerías y un archivo Makefile en donde podrás encontrar comandos de utilidad.
 
-### send message to sqs
+- Endpoints: Puede encontrar la documentación de los endpoints aquí: http://a9b64fe8aa91a4bd999ae28dae1451c3-1604131751.us-east-1.elb.amazonaws.com:8002/docs (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
-```sh
-aws sqs --endpoint-url=http://localhost:4566 send-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/local-aio-r2-dev-sqs-reception-queue.fifo --message-body file://local/sqs-message-example.json --message-group-id "message-group-id"
-```
+![alt text](imagenes/image-1.png)
