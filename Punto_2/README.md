@@ -163,3 +163,29 @@ La infrastructura para este ejercicio se basó en contenedores todo con eks, ten
 
 La interfaz tiene un front creado en React y un back en un servidor de experssJS.
 ![alt text](imagenes/Pregunta_respuesta_1.PNG)
+
+# Buenas prácticas:
+- Se usa JWT para la comunicación entre los microservicios, todo esto se envia por medio del header-
+- Se usa Secret Manger para custodiar todos los secretos de la base de datos, el secreto de openai y tokens de la solución.
+- Health check endpoint en los microservicios para verificar si están arriba.
+- Separación de infrastructura (Despliegue por un main.)
+- Partición de archivos para carga a base de datos. 
+- Implementación de Clean Architecture.
+- Se usa PEP 8 para la escritura del código (Facilidad en la lectura.)
+- Documentación de las funciones.
+- Alertamiento de errores automática (SNS)
+- Separación de Dockerfile (PDN y .local)
+- Centralización de imágenes docker con ECR
+
+# Trabajo futuro:
+
+Por términos de tiempo hay algunas implementaciones que me hubiera gustado hacer pero no pude. 
+- En el microservicio de preprocessing_ms, me gustaría que este escuche de una cola de SQS, debido a que este microservicio es asíncrono podría subir varios archivos al tiempo de diferentes eventos. 
+
+Como se puede ver en la arquitectura propongo tener un transfer family para subir los archivos a un bucket de S3 (Raw S3), este a su vez realiza un trigger para que event bridge envie un mensaje a la cola SQS (el mensaje contien la ruta del nuevo archivo recién subido a s3) y finalmente el microservicio hace un poll a la sqs y ese micro tendría KEDA para que escale según el número de mensajes en la cola.
+- Utilizar Dynatrace para el monitoreo en todos los microservicios. 
+- El micro de preprocessing_ms tiene dos rutas de get_status y get_result, básicamente por se asíncrono el devuelve el id de la transacción, me gustaría adicionarle una auditoría con una base de datos o una dynamo y actualizar la trasacción si falla o si es exitosa.
+
+# Inteligencia Artificial:
+- En mi local hice la prueba agregando un rerank antes de devolver la respuesta final y la respuesta fue buena, sin embargo, en esta versión no lo vas a encontrar pues no hacía mucha diferencia. Como mi retrieval es un top 3 y tiene bastante accuracy, el rerank no tenía mucho sentido.
+- Hice la prueba generando los embeddings con text-embedding-3-small que tiene una dimensión de 1536, sin embargo, con este el sistema se equivocaba contestando preguntas sobre películas semejantes. Así que decidí usar text-embedding-3-large que tiene una dimensión de 3072 y la respuesta mejoró bastante por la calidad de los embeddings.
