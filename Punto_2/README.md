@@ -191,6 +191,7 @@ La interfaz tiene un front creado en React y un back en un servidor de experssJS
 - Documentación para usuarios. Además de agregar Docker-compose para correr en su local, lo único que tienes que hacer es agregar las credenciales de AWS en el archivo .env en el root del proyecto y lanzar el docker compose. 
 - No se expone la aplicación directamente sino que se hace por medio de un balanceador de cargas.
 - Normalización de embeddings como se usa una dsitancia de coseno, esta funciona mejor con los vectores normalizados.
+- Utilización de CORS para orígenes cruzados.
 
 # Trabajo futuro:
 
