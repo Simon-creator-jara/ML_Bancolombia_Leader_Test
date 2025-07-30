@@ -138,7 +138,7 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 
 - **rag-chatbot:** Este microservicio contiene la interfaz gráfica para que el usuario interactue con el sistema RAG, además de eso también es orquestador, es decir es el encargado de realizar el workflow, recibir la pregunta, enviarsela a improve_question_ms, dependiendo del tag (si es una respuesta real o es una interacción diferente). Si es una respuesta real entonces envía la pregunta mejorada a generate_retrieve_ms, luego a generate_answer_ms y finalmente muestra la respuesta. Si no es una pregunta real (otro tipo de interacción), solo muestra en pantalla al respuesta del LLM de improve_question_ms. Este microservicio el front esta hecho en react y tiene un backend en expressJS.
 - deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods.
-- Endpoints: Puede encontrar la documentación de los endpoints aquí:  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
+- Endpoints: Puede acceder a la aplicación aquí: http://a012e64c768914815a966b17d908e85f-727706847.us-east-1.elb.amazonaws.com:3000/docs  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
 **Nota:** Todo el sistema tiene un sistema de alertamiento de errores (SNS) que envia a mi correo cada vez que hay un error. 
 
