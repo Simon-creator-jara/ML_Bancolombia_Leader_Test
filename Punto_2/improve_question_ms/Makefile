@@ -27,14 +27,6 @@ test_local: ## run the unit test in conda env
 		python -m coverage html; \
 	)
 
-local-stack: ## run the local stack
-
-		-@aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name local-aio-r2-dev-sqs-reception-queue.fifo --attributes FifoQueue=true,ContentBasedDeduplication=true
-
-		-@aws --endpoint-url=http://localhost:4566 s3api create-bucket --bucket local-aid-r2-dev-s3-bucket
-
-		-@aws --endpoint-url=http://localhost:4566 sns create-topic --name local-aid-r2-dev-sns-generic-error
-
 docker-build:
 	docker build -f deployment/Dockerfile -t improve_question_ms .
 

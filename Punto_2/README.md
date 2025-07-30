@@ -176,6 +176,7 @@ La interfaz tiene un front creado en React y un back en un servidor de experssJS
 - Alertamiento de errores automática (SNS)
 - Separación de Dockerfile (PDN y .local)
 - Centralización de imágenes docker con ECR
+- Documentación para usuarios. Además de agregar Docker-compose para correr en su local, lo único que tienes que hacer es agregar las credenciales de AWS en el archivo .env en el root del proyecto y lanzar el docker compose. 
 
 # Trabajo futuro:
 
