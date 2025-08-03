@@ -144,7 +144,7 @@ Toda esta infraestructura fue desplegada utilizando CloudFormation en mi cuenta 
 
 - **rag-chatbot:** Este microservicio contiene la interfaz gráfica para que el usuario interactue con el sistema RAG, además de eso también es orquestador, es decir es el encargado de realizar el workflow, recibir la pregunta, enviarsela a improve_question_ms, dependiendo del tag (si es una respuesta real o es una interacción diferente). Si es una respuesta real entonces envía la pregunta mejorada a generate_retrieve_ms, luego a generate_answer_ms y finalmente muestra la respuesta. Si no es una pregunta real (otro tipo de interacción), solo muestra en pantalla al respuesta del LLM de improve_question_ms. Este microservicio el front esta hecho en react y tiene un backend en expressJS.
 - deployment: Contiene el Dockerfile y deployment.yaml estos contienen la cofiguración para la creación de los pods.
-- Endpoints: Puede acceder a la aplicación aquí: http://a012e64c768914815a966b17d908e85f-727706847.us-east-1.elb.amazonaws.com:3000/docs  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
+- Endpoints: Puede acceder a la aplicación aquí: http://a012e64c768914815a966b17d908e85f-727706847.us-east-1.elb.amazonaws.com:3000  (si hay un error al abrir por favor, cambia https por http al inicio de la url en el browser.)
 
 **Nota:** Todo el sistema tiene un sistema de alertamiento de errores (SNS) que envia a mi correo cada vez que hay un error. 
 
@@ -201,6 +201,8 @@ Por términos de tiempo hay algunas implementaciones que me hubiera gustado hace
 Como se puede ver en la arquitectura propongo tener un transfer family para subir los archivos a un bucket de S3 (Raw S3), este a su vez realiza un trigger para que event bridge envie un mensaje a la cola SQS (el mensaje contien la ruta del nuevo archivo recién subido a s3) y finalmente el microservicio hace un poll a la sqs y ese micro tendría KEDA para que escale según el número de mensajes en la cola.
 - Utilizar Dynatrace para el monitoreo en todos los microservicios. 
 - El micro de preprocessing_ms tiene dos rutas de get_status y get_result, básicamente por se asíncrono el devuelve el id de la transacción, me gustaría adicionarle una auditoría con una base de datos o una dynamo y actualizar la trasacción si falla o si es exitosa.
+- Agrelarle un upload en multipartes de los archivos de S3 que superen 5GB, con la finalidad de hacerlo lo más rápido posible.
+- Agregarle memoria al RAG, que corto y largo plazo.
 
 # Inteligencia Artificial:
 - En mi local hice la prueba agregando un rerank antes de devolver la respuesta final y la respuesta fue buena, sin embargo, en esta versión no lo vas a encontrar pues no hacía mucha diferencia. Como mi retrieval es un top 3 y tiene bastante accuracy, el rerank no tenía mucho sentido.
