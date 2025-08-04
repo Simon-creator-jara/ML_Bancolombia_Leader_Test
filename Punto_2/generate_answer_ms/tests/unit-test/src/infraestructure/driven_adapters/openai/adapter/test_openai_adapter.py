@@ -34,9 +34,7 @@ async def test_generate_answer_success():
             {
                 "role": "system",
                 "content": (
-                    """You are an assistant that answers only based on the given context. Always respond in spanish
-                    — If the question is not answered in the provided context, reply:
-                        “I’m sorry, I don’t have enough information to answer that.”
+                    """You are an assistant that answers only based on the given context. Always respond in spanish.
                     — Do not invent or assume anything beyond the given context."""
                 )
             },
@@ -84,9 +82,7 @@ async def test_generate_answer_empty_context():
             {
                 "role": "system",
                 "content": (
-                    """You are an assistant that answers only based on the given context. Always respond in spanish
-                    — If the question is not answered in the provided context, reply:
-                        “I’m sorry, I don’t have enough information to answer that.”
+                    """You are an assistant that answers only based on the given context. Always respond in spanish.
                     — Do not invent or assume anything beyond the given context."""
                 )
             },
