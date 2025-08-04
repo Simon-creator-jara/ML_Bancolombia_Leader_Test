@@ -31,22 +31,25 @@ async def test_generate_answer_success():
     )
 
     expected_messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are an assistant that answers only based on the given context. Always respond in spanish "
-            )
-        },
-        {
-            "role": "user",
-            "content": f"""Based on the following movie data, answer the question {question_text}.
+            {
+                "role": "system",
+                "content": (
+                    """You are an assistant that answers only based on the given context. Always respond in spanish
+                    — If the question is not answered in the provided context, reply:
+                        “I’m sorry, I don’t have enough information to answer that.”
+                    — Do not invent or assume anything beyond the given context."""
+                )
+            },
+            {
+                "role": "user",
+                "content": f"""Based on the following movie data, answer the question {question_text}.
                             If the movie title is mentioned, match it exactly and return the associated information.
                             
                             {expected_context}
                             
                             """
-        }
-    ]
+            }
+        ]
 
     result = await improver.generate(question_text, answer_data)
 
@@ -78,22 +81,25 @@ async def test_generate_answer_empty_context():
     expected_context = ""
 
     expected_messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are an assistant that answers only based on the given context. Always respond in spanish "
-            )
-        },
-        {
-            "role": "user",
-            "content": f"""Based on the following movie data, answer the question {question_text}.
+            {
+                "role": "system",
+                "content": (
+                    """You are an assistant that answers only based on the given context. Always respond in spanish
+                    — If the question is not answered in the provided context, reply:
+                        “I’m sorry, I don’t have enough information to answer that.”
+                    — Do not invent or assume anything beyond the given context."""
+                )
+            },
+            {
+                "role": "user",
+                "content": f"""Based on the following movie data, answer the question {question_text}.
                             If the movie title is mentioned, match it exactly and return the associated information.
                             
                             {expected_context}
                             
                             """
-        }
-    ]
+            }
+        ]
 
     result = await improver.generate(question_text, answer_data)
 
